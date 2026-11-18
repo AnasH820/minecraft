@@ -1,1 +1,258 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLOCKWORLD — Explore Your World</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+--green:#3c8527;
+--dark:#172015;
+--lime:#75b936;
+--yellow:#f3d35b;
+--gray:#dedede;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Roboto,Arial,sans-serif;background:#f5f5f5;color:#252525}
+button,a{cursor:pointer}
+nav{height:76px;background:#171717;display:flex;align-items:center;justify-content:space-between;padding:0 7%;position:sticky;top:0;z-index:10}
+.logo{font-family:'Press Start 2P';font-size:15px;color:#8bd14e;text-decoration:none;line-height:1.8}
+.navlinks{display:flex;gap:30px;align-items:center}
+.navlinks a{color:white;text-decoration:none;font-weight:700;font-size:14px}
+.navlinks a:hover{color:#8bd14e}
+.download-nav{background:#72b52d;color:#101010!important;padding:13px 20px}
+.hero{min-height:650px;background:linear-gradient(90deg,rgba(0,0,0,.75),rgba(0,0,0,.12)),url('https://images.unsplash.com/photo-1607513746994-51f730a44832?auto=format&fit=crop&w=2000&q=85') center/cover;display:flex;align-items:center;padding:80px 10%;color:white}
+.hero-content{max-width:650px}
+.eyebrow{font-weight:900;letter-spacing:4px;color:#a6e66a;margin-bottom:25px}
+.hero h1{font-size:clamp(42px,7vw,82px);font-weight:900;line-height:1.03;text-transform:uppercase;text-shadow:4px 5px #252525}
+.hero p{font-size:19px;line-height:1.7;margin:28px 0;max-width:530px}
+.primary{display:inline-block;background:#78b936;color:#14200d;padding:18px 30px;font-weight:900;text-transform:uppercase;text-decoration:none;border:0;box-shadow:0 5px #345e1e;transition:.2s}
+.primary:hover{transform:translateY(-3px);box-shadow:0 8px #345e1e}
+section{padding:95px 9%}
+.section-title{text-align:center;font-size:36px;font-weight:900;text-transform:uppercase;margin-bottom:16px}
+.section-sub{text-align:center;color:#777;margin-bottom:50px;line-height:1.6}
+.editions{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}
+.card{background:white;box-shadow:0 5px 20px #00000012;overflow:hidden;transition:.25s}
+.card:hover{transform:translateY(-8px)}
+.card img{width:100%;height:210px;object-fit:cover}
+.card-content{padding:25px}
+.card h3{font-size:23px;margin-bottom:12px}
+.card p{color:#777;line-height:1.6;margin-bottom:20px}
+.card a{color:#3c8527;font-weight:900;text-decoration:none}
+.features{background:#202b1e;color:white}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:35px;margin-top:55px}
+.feature{text-align:center;padding:30px}
+.feature .emoji{font-size:55px;margin-bottom:20px}
+.feature h3{font-size:22px;margin-bottom:12px}
+.feature p{color:#c2cbbd;line-height:1.7}
+.news-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:25px}
+.news-card{background:white;padding:30px;border-left:5px solid #75b936}
+.news-card h3{margin-bottom:12px}
+.news-card p{color:#777;line-height:1.6}
+.download-section{background:#e8eedf}
+.download-box{max-width:850px;margin:auto;background:white;padding:45px;box-shadow:0 8px 30px #00000012}
+.download-box h3{text-align:center;font-size:26px;margin-bottom:12px}
+.download-box>p{text-align:center;color:#777;margin-bottom:30px;line-height:1.6}
+.edition-select{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:25px}
+.edition-option{border:2px solid #ddd;background:white;padding:20px;text-align:center;font-weight:900}
+.edition-option.active{border-color:#65a934;background:#eff8e7}
+.edition-option small{display:block;font-weight:400;color:#777;margin-top:8px}
+.exam{border-top:1px solid #eee;padding-top:25px}
+.exam h4{font-size:20px;margin-bottom:15px}
+.question{background:#f5f5f5;padding:20px;margin-bottom:15px}
+.question p{font-weight:700;margin-bottom:12px}
+.answer{display:block;margin:10px 0;color:#555;cursor:pointer}
+.answer input{margin-right:9px;accent-color:#65a934}
+.exam button{width:100%;margin-top:15px;font-size:14px}
+.success{display:none;text-align:center;padding:35px 15px;background:#edf8e5;margin-top:25px}
+.success .trophy{font-size:65px}
+.success h3{font-size:28px;color:#3c8527;margin:15px 0}
+.success p{color:#555;margin-bottom:22px;line-height:1.6}
+footer{background:#151515;color:white;padding:50px 9%;text-align:center}
+footer .logo{margin-bottom:20px;display:block}
+footer p{color:#999;line-height:1.8;font-size:13px}
+footer a{color:#8bd14e}
+@media(max-width:800px){
+.navlinks{gap:12px}
+.navlinks a{font-size:11px}
+.editions,.feature-grid{grid-template-columns:1fr}
+.news-grid{grid-template-columns:1fr}
+.hero{min-height:550px;padding:70px 7%}
+section{padding:70px 7%}
+}
+@media(max-width:520px){
+nav{padding:0 5%;height:auto;min-height:75px;flex-wrap:wrap;gap:10px;padding-top:12px;padding-bottom:12px}
+.logo{font-size:11px}
+.navlinks{width:100%;justify-content:space-between}
+.navlinks a{font-size:10px}
+.download-nav{padding:9px}
+.download-box{padding:25px 16px}
+.edition-select{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<nav>
+<a class="logo" href="#">BLOCKWORLD</a>
+<div class="navlinks">
+<a href="#games">Games</a>
+<a href="#features">Explore</a>
+<a href="#news">News</a>
+<a class="download-nav" href="#download">DOWNLOAD</a>
+</div>
+</nav>
+
+<header class="hero">
+<div class="hero-content">
+<div class="eyebrow">YOUR WORLD. YOUR ADVENTURE.</div>
+<h1>BUILD<br>YOUR OWN<br>WORLD.</h1>
+<p>Explore endless landscapes, create incredible structures, discover mysterious places and experience adventures without limits.</p>
+<a class="primary" href="#games">EXPLORE THE GAME</a>
+</div>
+</header>
+
+<section id="games">
+<h2 class="section-title">Discover the game</h2>
+<p class="section-sub">Choose your adventure and discover new possibilities.</p>
+<div class="editions">
+<article class="card">
+<img src="https://images.unsplash.com/photo-1607513746994-51f730a44832?auto=format&fit=crop&w=800&q=80" alt="Block world">
+<div class="card-content">
+<h3>Java Edition</h3>
+<p>Explore the classic PC experience with creative freedom and a huge community.</p>
+<a href="#download" onclick="selectEdition('java')">DISCOVER JAVA →</a>
+</div>
+</article>
+<article class="card">
+<img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80" alt="Nature landscape">
+<div class="card-content">
+<h3>Bedrock Edition</h3>
+<p>Discover adventures across supported devices and play together with friends.</p>
+<a href="#download" onclick="selectEdition('bedrock')">DISCOVER BEDROCK →</a>
+</div>
+</article>
+<article class="card">
+<img src="https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=800&q=80" alt="Forest">
+<div class="card-content">
+<h3>Community</h3>
+<p>Discover creations, adventures and ideas from players around the world.</p>
+<a href="#news">EXPLORE MORE →</a>
+</div>
+</article>
+</div>
+</section>
+
+<section class="features" id="features">
+<h2 class="section-title">Create your adventure</h2>
+<p class="section-sub" style="color:#bbb">There are no limits to your imagination.</p>
+<div class="feature-grid">
+<div class="feature">
+<div class="emoji">🏡</div>
+<h3>Build</h3>
+<p>Create houses, castles, cities and anything you can imagine.</p>
+</div>
+<div class="feature">
+<div class="emoji">⚔️</div>
+<h3>Adventure</h3>
+<p>Explore mysterious places and discover new challenges.</p>
+</div>
+<div class="feature">
+<div class="emoji">🌎</div>
+<h3>Explore</h3>
+<p>Discover amazing environments and endless possibilities.</p>
+</div>
+</div>
+</section>
+
+<section id="news">
+<h2 class="section-title">Latest updates</h2>
+<p class="section-sub">Stay connected with the world of block adventures.</p>
+<div class="news-grid">
+<div class="news-card">
+<h3>📰 Official Game News</h3>
+<p>Discover announcements, updates and new features from the Minecraft team.</p>
+<a href="https://www.minecraft.net/en-us/articles" target="_blank">READ OFFICIAL NEWS →</a>
+</div>
+<div class="news-card">
+<h3>🎮 Game Downloads</h3>
+<p>Find the official game installers and available platforms.</p>
+<a href="https://www.minecraft.net/en-us/download" target="_blank">DOWNLOAD PAGE →</a>
+</div>
+</div>
+</section>
+
+<section class="download-section" id="download">
+<h2 class="section-title">Download center</h2>
+<p class="section-sub">Choose your edition and complete your examination to unlock access.</p>
+<div class="download-box">
+<h3>🔓 Unlock your game</h3>
+<p>Select an edition, answer the questions and unlock your download access!</p>
+<div class="edition-select">
+<button class="edition-option active" id="java" onclick="selectEdition('java')">
+JAVA EDITION
+<small>PC / Java</small>
+</button>
+<button class="edition-option" id="bedrock" onclick="selectEdition('bedrock')">
+BEDROCK EDITION
+<small>Windows / Other platforms</small>
+</button>
+</div>
+<div class="exam">
+<h4>📝 Player Examination</h4>
+<p style="color:#777;margin-bottom:20px">Answer the following questions to complete your examination.</p>
+<div class="question">
+<p>1. What can you build in a block-based world?</p>
+<label class="answer"><input type="radio" name="q1" value="a"> Houses and castles</label>
+<label class="answer"><input type="radio" name="q1" value="b"> Nothing</label>
+<label class="answer"><input type="radio" name="q1" value="c"> Only roads</label>
+</div>
+<div class="question">
+<p>2. Which mode allows unlimited building resources?</p>
+<label class="answer"><input type="radio" name="q2" value="a"> Survival</label>
+<label class="answer"><input type="radio" name="q2" value="b"> Creative</label>
+<label class="answer"><input type="radio" name="q2" value="c"> Spectator</label>
+</div>
+<div class="question">
+<p>3. What is the most important rule of exploration?</p>
+<label class="answer"><input type="radio" name="q3" value="a"> Never explore</label>
+<label class="answer"><input type="radio" name="q3" value="b"> Stay in one place</label>
+<label class="answer"><input type="radio" name="q3" value="c"> Have fun and discover!</label>
+</div>
+<button class="primary" onclick="completeExam()">SUBMIT EXAMINATION</button>
+</div>
+<div class="success" id="success">
+<div class="trophy">🏆</div>
+<h3>EXAMINATION PASSED!</h3>
+<p>Congratulations! Your examination has been successfully completed.<br>Your download access is now unlocked!</p>
+<a class="primary" id="downloadLink" href="https://www.minecraft.net/en-us/download" target="_blank">⬇ GET YOUR GAME</a>
+</div>
+</div>
+</section>
+
+<footer>
+<a class="logo" href="#">BLOCKWORLD</a>
+<p>An unofficial fan-made gaming website.<br>Not affiliated with or endorsed by Mojang or Microsoft.<br>Minecraft is a trademark of Mojang AB.<br><br><a href="https://www.minecraft.net/">Official Minecraft Website</a></p>
+</footer>
+
+<script>
+let selectedEdition='java';
+
+function selectEdition(edition){
+selectedEdition=edition;
+document.getElementById('java').classList.toggle('active',edition==='java');
+document.getElementById('bedrock').classList.toggle('active',edition==='bedrock');
+document.getElementById('success').style.display='none';
+}
+
+function completeExam(){
+const success=document.getElementById('success');
+document.getElementById('downloadLink').href='https://www.minecraft.net/en-us/download';
+success.style.display='block';
+success.scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>
